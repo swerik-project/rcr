@@ -10,6 +10,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
   checkmate,
+  dplyr,
+  tidyr,
   xml2
 RoxygenNote: 7.2.3
 Suggests: 

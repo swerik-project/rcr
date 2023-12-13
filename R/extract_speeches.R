@@ -22,7 +22,9 @@
 #'   \item{text}{The speech segment as plain text.}
 #' }
 #'
-#'
+#' @importFrom xml2 read_xml xml_ns_strip xml_name xml_attr xml_text xml_find_all
+#' @importFrom tidyr fill
+#' @importFrom dplyr tibble
 #' @export
 extract_speeches_from_record <- function(record_path){
   # Assert the file exists
@@ -34,21 +36,21 @@ extract_speeches_from_record <- function(record_path){
   }
   checkmate::assert_file_exists(record_path)
 
-  x <- xml2::read_xml(record_path)
+  x <- read_xml(record_path)
   x <- xml_ns_strip(x)
 
   # Extract speeches
-  xs <- xml2::xml_find_all(x, ".//note[@type = 'speaker']|.//u|.//seg")
-  df <- dplyr::tibble(type_speaker = xml_attr(xs, attr = "type") == "speaker",
-                      name = xml_name(xs),
-                      who = xml_attr(xs, attr = "who"),
-                      id = xml_attr(xs, attr = "id"),
-                      text = xml_text(xs, trim = TRUE))
+  xs <- xml_find_all(x, ".//note[@type = 'speaker']|.//u|.//seg")
+  df <- tibble(type_speaker = xml_attr(xs, attr = "type") == "speaker",
+               name = xml_name(xs),
+               who = xml_attr(xs, attr = "who"),
+               id = xml_attr(xs, attr = "id"),
+               text = xml_text(xs, trim = TRUE))
   df$type_speaker[is.na(df$type_speaker)] <- FALSE
   df$speech_no <- cumsum(df$type_speaker)
   df$speech_id <- df$id
   df$speech_id[!df$type_speaker] <- NA
-  df <- tidyr::fill(df, who, speech_id)
+  df <- fill(df, who, speech_id)
   df <- df[df$name == "seg",]
   df$type_speaker <- NULL
   df$name <- NULL
