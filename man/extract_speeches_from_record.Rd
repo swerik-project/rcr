@@ -8,8 +8,6 @@ extract_speeches_from_record(record_path)
 }
 \arguments{
 \item{record_path}{a file path to a record XML file}
-
-\item{record_paths}{a vector of file paths to record XML files}
 }
 \value{
 The function returns a tibble data frame with the following variables:

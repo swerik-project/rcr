@@ -9,7 +9,6 @@
 #' For multiple files, parallelism can be used.
 #'
 #' @param record_path a file path to a record XML file
-#' @param record_paths a vector of file paths to record XML files
 #'
 #'
 #' @return
@@ -41,16 +40,16 @@ extract_speeches_from_record <- function(record_path){
 
   # Extract speeches
   xs <- xml_find_all(x, ".//note[@type = 'speaker']|.//u|.//seg")
-  df <- tibble(type_speaker = xml_attr(xs, attr = "type") == "speaker",
-               name = xml_name(xs),
-               who = xml_attr(xs, attr = "who"),
-               id = xml_attr(xs, attr = "id"),
-               text = xml_text(xs, trim = TRUE))
+  df <- tibble("type_speaker" = xml_attr(xs, attr = "type") == "speaker",
+               "name" = xml_name(xs),
+               "who" = xml_attr(xs, attr = "who"),
+               "id" = xml_attr(xs, attr = "id"),
+               "text" = xml_text(xs, trim = TRUE))
   df$type_speaker[is.na(df$type_speaker)] <- FALSE
   df$speech_no <- cumsum(df$type_speaker)
   df$speech_id <- df$id
   df$speech_id[!df$type_speaker] <- NA
-  df <- fill(df, who, speech_id)
+  df <- fill(df, "who", "speech_id")
   df <- df[df$name == "seg",]
   df$type_speaker <- NULL
   df$name <- NULL
