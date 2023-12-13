@@ -73,8 +73,8 @@ extract_speeches_from_records <- function(record_paths, mc.cores = getOption("mc
   }
   checkmate::assert_file_exists(record_paths)
 
-  if(mc.cores > 1L){
-    message(mc.cores, " cores are used (on Mac and Linux) to process the data.")
+  if(mc.cores > 1L & .Platform$OS.type == "unix"){
+    message(mc.cores, " cores are used to process the data.")
     res <- parallel::mclapply(record_paths, extract_speeches_from_record, mc.cores = mc.cores, ...)
   } else {
     res <- lapply(record_paths, extract_speeches_from_record)

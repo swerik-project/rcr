@@ -17,7 +17,7 @@ test_that("extracting speeches works", {
   expect_silent(sp <- extract_speeches_from_record(tfp[1]))
   expect_error(sp <- extract_speeches_from_record(tfp))
   expect_silent(sp <- extract_speeches_from_records(tfp, mc.cores = 1L))
-  expect_message(sp <- extract_speeches_from_records(record_paths = tfp))
+  expect_message(sp <- extract_speeches_from_records(record_paths = tfp, mc.cores = 2L))
 
   if(FALSE){
     # Test to read in the whole corpus year by year
