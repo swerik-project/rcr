@@ -19,4 +19,14 @@ To use the R package you need to download the riksdriksdagen corpus [here](https
 set_riksdag_corpora_path("[THE PATH TO THE CORPORA HERE]")
 ```
 
+To extract speeches from the corpus we use ```extract_speeches_from_records()```. Below is an example that assume that the corpora path has has been set and extract the speeches from three different records.
+
+```
+fps <-
+  c("protocols/1896/prot-1896--ak--042.xml",
+    "protocols/1951/prot-1951--fk--029.xml",
+    "protocols/1975/prot-1975--036.xml")
+sp <- extract_speeches_from_records(fps)
+```
+
 
