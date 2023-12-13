@@ -7,12 +7,21 @@
 \usage{
 extract_speeches_from_record(record_path)
 
-extract_speeches_from_records(record_paths)
+extract_speeches_from_records(
+  record_paths,
+  mc.cores = getOption("mc.cores", detectCores() - 1L),
+  ...
+)
 }
 \arguments{
 \item{record_path}{a file path to a record XML file}
 
 \item{record_paths}{a vector of file paths to a record XML file}
+
+\item{mc.cores}{the number of cores to use (Linux and Mac only) in \code{mclapply}.
+Defaults to available cores - 1L.}
+
+\item{...}{further arguments supplied to \code{mclapply}.}
 }
 \value{
 The function returns a tibble data frame with the following variables:

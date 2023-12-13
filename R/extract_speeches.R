@@ -10,6 +10,9 @@
 #'
 #' @param record_path a file path to a record XML file
 #' @param record_paths a vector of file paths to a record XML file
+#' @param mc.cores the number of cores to use (Linux and Mac only) in \code{mclapply}.
+#'                 Defaults to available cores - 1L.
+#' @param ... further arguments supplied to \code{mclapply}.
 #'
 #' @return
 #' The function returns a tibble data frame with the following variables:
@@ -24,6 +27,7 @@
 #' @importFrom xml2 read_xml xml_ns_strip xml_name xml_attr xml_text xml_find_all
 #' @importFrom tidyr fill
 #' @importFrom dplyr tibble bind_rows
+#' @importFrom parallel mclapply detectCores
 #' @export
 extract_speeches_from_record <- function(record_path){
   # Assert the file exists
@@ -58,7 +62,7 @@ extract_speeches_from_record <- function(record_path){
 
 #' @rdname extract_speeches_from_record
 #' @export
-extract_speeches_from_records <- function(record_paths){
+extract_speeches_from_records <- function(record_paths, mc.cores = getOption("mc.cores", detectCores() - 1L), ...){
   checkmate::assert_character(record_paths)
   rcp <- get_riksdag_corpora_path()
   rcfp <- file.path(rcp, record_paths)
@@ -69,7 +73,13 @@ extract_speeches_from_records <- function(record_paths){
   }
   checkmate::assert_file_exists(record_paths)
 
-  res <- lapply(record_paths, extract_speeches_from_record)
+  if(mc.cores > 1L){
+    message(mc.cores, " cores are used (on Mac and Linux) to process the data.")
+    res <- parallel::mclapply(record_paths, extract_speeches_from_record, mc.cores = mc.cores, ...)
+  } else {
+    res <- lapply(record_paths, extract_speeches_from_record)
+  }
+
   for(i in seq_along(res)){
     res[[i]]$record <- basename(record_paths[i])
   }
