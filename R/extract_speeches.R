@@ -11,7 +11,7 @@
 #' @param record_path a file path to a record XML file
 #' @param record_paths a vector of file paths to a record XML file
 #' @param mc.cores the number of cores to use (Linux and Mac only) in \code{mclapply}.
-#'                 Defaults to available cores - 1L.
+#'                 Defaults to available cores - 1.
 #' @param ... further arguments supplied to \code{mclapply}.
 #'
 #' @return

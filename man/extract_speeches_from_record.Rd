@@ -19,7 +19,7 @@ extract_speeches_from_records(
 \item{record_paths}{a vector of file paths to a record XML file}
 
 \item{mc.cores}{the number of cores to use (Linux and Mac only) in \code{mclapply}.
-Defaults to available cores - 1L.}
+Defaults to available cores - 1.}
 
 \item{...}{further arguments supplied to \code{mclapply}.}
 }
