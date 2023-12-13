@@ -9,7 +9,7 @@
 #' For multiple files, parallelism can be used.
 #'
 #' @param record_path a file path to a record XML file
-#'
+#' @param record_paths a vector of file paths to a record XML file
 #'
 #' @return
 #' The function returns a tibble data frame with the following variables:
