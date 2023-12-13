@@ -16,4 +16,6 @@ test_that("extracting speeches works", {
 
   expect_silent(sp <- extract_speeches_from_record(tfp[1]))
   expect_error(sp <- extract_speeches_from_record(tfp))
+  expect_silent(sp <- extract_speeches_from_records(tfp))
+
 })

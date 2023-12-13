@@ -2,9 +2,12 @@
 % Please edit documentation in R/extract_speeches.R
 \name{extract_speeches_from_record}
 \alias{extract_speeches_from_record}
+\alias{extract_speeches_from_records}
 \title{Extract Speeches from Records}
 \usage{
 extract_speeches_from_record(record_path)
+
+extract_speeches_from_records(record_paths)
 }
 \arguments{
 \item{record_path}{a file path to a record XML file}

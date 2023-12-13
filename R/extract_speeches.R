@@ -23,7 +23,7 @@
 #'
 #' @importFrom xml2 read_xml xml_ns_strip xml_name xml_attr xml_text xml_find_all
 #' @importFrom tidyr fill
-#' @importFrom dplyr tibble
+#' @importFrom dplyr tibble bind_rows
 #' @export
 extract_speeches_from_record <- function(record_path){
   # Assert the file exists
@@ -54,5 +54,26 @@ extract_speeches_from_record <- function(record_path){
   df$type_speaker <- NULL
   df$name <- NULL
   df[, c("speech_no", "speech_id", "who", "id", "text")]
+}
+
+#' @rdname extract_speeches_from_record
+#' @export
+extract_speeches_from_records <- function(record_paths){
+  checkmate::assert_character(record_paths)
+  rcp <- get_riksdag_corpora_path()
+  rcfp <- file.path(rcp, record_paths)
+  for(i in seq_along(rcfp)){
+    if(file.exists(rcfp[i])){
+      record_paths[i] <- rcfp[i]
+    }
+  }
+  checkmate::assert_file_exists(record_paths)
+
+  res <- lapply(record_paths, extract_speeches_from_record)
+  for(i in seq_along(res)){
+    res[[i]]$record <- basename(record_paths[i])
+  }
+  res <- bind_rows(res)
+  res[, c("record", "speech_no", "speech_id", "who", "id", "text")]
 }
 
