@@ -29,3 +29,7 @@ fps <-
 sp <- extract_speeches_from_records(fps)
 ```
 
+Similarly we can extract the dates from the records with
+```
+ds <- extract_record_dates_from_records(fps)
+```
