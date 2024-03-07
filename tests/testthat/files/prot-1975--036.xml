@@ -28,7 +28,7 @@
       </editorialDecl>
     </encodingDesc>
   </teiHeader>
-  <TEI>
+  <TEI xml:id="prot-1975--036">
     <teiHeader>
       <fileDesc>
         <titleStmt>

@@ -15,8 +15,9 @@
 #' @param ... further arguments supplied to \code{mclapply}.
 #'
 #' @return
-#' The function returns a tibble data frame with the following variables:
+#' The function returns a \code{tibble} data frame with the following variables:
 #' \describe{
+#'   \item{record_id}{The id of the record.}
 #'   \item{speech_no}{The speech number in the record.}
 #'   \item{speech_id}{The id of the XML node to the introduction of the speaker.}
 #'   \item{who}{The id of the person giving the speech.}
@@ -43,8 +44,10 @@ extract_speeches_from_record <- function(record_path){
   x <- xml_ns_strip(x)
 
   # Extract speeches
+  id <- xml_attr(xml_find_all(x, "TEI"),attr = "id")
   xs <- xml_find_all(x, ".//note[@type = 'speaker']|.//u|.//seg")
-  df <- tibble("type_speaker" = xml_attr(xs, attr = "type") == "speaker",
+  df <- tibble("record_id" = id,
+               "type_speaker" = xml_attr(xs, attr = "type") == "speaker",
                "name" = xml_name(xs),
                "who" = xml_attr(xs, attr = "who"),
                "id" = xml_attr(xs, attr = "id"),
@@ -57,7 +60,7 @@ extract_speeches_from_record <- function(record_path){
   df <- df[df$name == "seg",]
   df$type_speaker <- NULL
   df$name <- NULL
-  df[, c("speech_no", "speech_id", "who", "id", "text")]
+  df[, c("record_id", "speech_no", "speech_id", "who", "id", "text")]
 }
 
 #' @rdname extract_speeches_from_record
@@ -80,10 +83,7 @@ extract_speeches_from_records <- function(record_paths, mc.cores = getOption("mc
     res <- lapply(record_paths, extract_speeches_from_record)
   }
 
-  for(i in seq_along(res)){
-    res[[i]]$record <- basename(record_paths[i])
-  }
   res <- bind_rows(res)
-  res[, c("record", "speech_no", "speech_id", "who", "id", "text")]
+  res[, c("record_id", "speech_no", "speech_id", "who", "id", "text")]
 }
 
