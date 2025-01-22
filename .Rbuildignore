@@ -2,3 +2,6 @@
 ^\.Rproj\.user$
 ^\.github$
 todo.tdl
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
