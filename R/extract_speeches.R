@@ -40,23 +40,23 @@ extract_speeches_from_record <- function(record_path){
   }
   checkmate::assert_file_exists(record_path)
 
-  x <- read_xml(record_path)
-  x <- xml_ns_strip(x)
+  x <- xml2::read_xml(record_path)
+  x <- xml2::xml_ns_strip(x)
 
   # Extract speeches
-  id <- xml_attr(xml_find_all(x, "TEI"),attr = "id")
-  xs <- xml_find_all(x, ".//note[@type = 'speaker']|.//u|.//seg")
-  df <- tibble("record_id" = id,
-               "type_speaker" = xml_attr(xs, attr = "type") == "speaker",
-               "name" = xml_name(xs),
-               "who" = xml_attr(xs, attr = "who"),
-               "id" = xml_attr(xs, attr = "id"),
-               "text" = xml_text(xs, trim = TRUE))
+  id <- xml2::xml_attr(xml2::xml_find_all(x, xpath = "TEI"), attr = "id")
+  xs <- xml2::xml_find_all(x, ".//note[@type = 'speaker']|.//u|.//seg")
+  df <- dplyr::tibble("record_id" = id,
+                      "type_speaker" = xml2::xml_attr(xs, attr = "type") == "speaker",
+                      "name" = xml2::xml_name(xs),
+                      "who" = xml2::xml_attr(xs, attr = "who"),
+                      "id" = xml2::xml_attr(xs, attr = "id"),
+                      "text" = xml2::xml_text(xs, trim = TRUE))
   df$type_speaker[is.na(df$type_speaker)] <- FALSE
   df$speech_no <- cumsum(df$type_speaker)
   df$speech_id <- df$id
   df$speech_id[!df$type_speaker] <- NA
-  df <- fill(df, "who", "speech_id")
+  df <- tidyr::fill(df, "who", "speech_id")
   df <- df[df$name == "seg",]
   df$type_speaker <- NULL
   df$name <- NULL
@@ -74,7 +74,7 @@ extract_speeches_from_records <- function(record_paths, mc.cores = getOption("mc
       record_paths[i] <- rcfp[i]
     }
   }
-  checkmate::assert_file_exists(record_paths)
+  checkmate::assert_file_exists(rcfp)
 
   if(mc.cores > 1L & .Platform$OS.type == "unix"){
     message(mc.cores, " cores are used to process the data.")

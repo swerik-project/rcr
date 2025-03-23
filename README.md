@@ -23,9 +23,9 @@ To extract speeches from the corpora, we use ```extract_speeches_from_records()`
 
 ```
 fps <-
-  c("protocols/1896/prot-1896--ak--042.xml",
-    "protocols/1951/prot-1951--fk--029.xml",
-    "protocols/1975/prot-1975--036.xml")
+  c("data/1896/prot-1896--ak--042.xml",
+    "data/1951/prot-1951--fk--029.xml",
+    "data/1975/prot-1975--036.xml")
 sp <- extract_speeches_from_records(fps)
 ```
 
