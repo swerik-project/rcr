@@ -44,7 +44,7 @@ extract_speeches_from_record <- function(record_path){
   x <- xml2::xml_ns_strip(x)
 
   # Extract speeches
-  id <- xml2::xml_attr(xml2::xml_find_all(x, xpath = "TEI"), attr = "id")
+  id <- xml2::xml_attr(xml2::xml_root(x), attr = "id")
   xs <- xml2::xml_find_all(x, ".//note[@type = 'speaker']|.//u|.//seg")
   df <- dplyr::tibble("record_id" = id,
                       "type_speaker" = xml2::xml_attr(xs, attr = "type") == "speaker",

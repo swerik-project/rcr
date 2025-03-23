@@ -16,7 +16,7 @@
 #'   \item{record_date}{The date of the record.}
 #' }
 #'
-#' @importFrom xml2 read_xml xml_ns_strip, xml_attr
+#' @importFrom xml2 read_xml xml_ns_strip xml_attr
 #' @export
 extract_record_dates_from_record <- function(record_path, all=F){
   checkmate::assert_string(record_path)
