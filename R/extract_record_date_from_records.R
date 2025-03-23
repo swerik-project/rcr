@@ -16,7 +16,7 @@
 #'   \item{record_date}{The date of the record.}
 #' }
 #'
-#' @importFrom xml2 read_xml xml_ns_strip xml_attr
+#' @importFrom xml2 read_xml xml_ns_strip xml_attr xml_root
 #' @export
 extract_record_dates_from_record <- function(record_path, all=F){
   checkmate::assert_string(record_path)
@@ -30,7 +30,7 @@ extract_record_dates_from_record <- function(record_path, all=F){
   x <- read_xml(record_path)
   x <- xml_ns_strip(x)
 
-  id <- xml_attr(xml_find_all(x, "TEI"),attr = "id")
+  id <- xml_attr(xml_root(x),attr = "id")
   xs <- xml_find_all(x,".//docDate")
   df <- tibble("record_id" = id,
                "doc_date" = as.Date(xml_text(xs)))

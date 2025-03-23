@@ -16,6 +16,7 @@ remotes::install_github('swerik-project/rcr')
 ## Use
 To use the R package, download the riksdagen corpora [here](https://github.com/welfare-state-analytics/riksdagen-corpus). As a first step, we point to the directory where the corpora are stored as follows:
 ```
+library(rcr)
 set_riksdag_corpora_path("[THE PATH TO THE CORPORA HERE]")
 ```
 
