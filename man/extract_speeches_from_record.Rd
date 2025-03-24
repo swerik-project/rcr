@@ -3,6 +3,7 @@
 \name{extract_speeches_from_record}
 \alias{extract_speeches_from_record}
 \alias{extract_speeches_from_records}
+\alias{assert_and_complement_paths}
 \title{Extract Speeches from Records}
 \usage{
 extract_speeches_from_record(record_path)
@@ -12,6 +13,8 @@ extract_speeches_from_records(
   mc.cores = getOption("mc.cores", detectCores() - 1L),
   ...
 )
+
+assert_and_complement_paths(record_paths)
 }
 \arguments{
 \item{record_path}{a file path to a record XML file}
@@ -41,4 +44,8 @@ introduction (<note type="speaker">). The function returns the segments
 of the speech.
 
 For multiple files, parallelism can be used.
+}
+\details{
+The function checks if there is a file at the record_path.
+If its not a file, it test to complement with the corpora path
 }

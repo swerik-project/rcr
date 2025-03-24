@@ -72,10 +72,13 @@ extract_speeches_from_records <- function(record_paths, mc.cores = getOption("mc
   res[, c("record_id", "speech_no", "speech_id", "who", "id", "text")]
 }
 
+#' Assert and complement file paths
+#'
 #' @details
 #' The function checks if there is a file at the record_path.
 #' If its not a file, it test to complement with the corpora path
 #'
+#' @rdname extract_speeches_from_record
 assert_and_complement_paths <- function(record_paths){
   # Assert the file exists
   checkmate::assert_character(record_paths)
