@@ -10,7 +10,7 @@ get_riksdag_corpora_path()
 set_riksdag_corpora_path(riksdag_corpora_path)
 }
 \arguments{
-\item{riksdag_corpora_path}{The path}
+\item{riksdag_corpora_path}{a full path to a riksdag corpus}
 }
 \description{
 Set and get the path to the Riksdag Corpora

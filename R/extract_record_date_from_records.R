@@ -16,21 +16,15 @@
 #'   \item{record_date}{The date of the record.}
 #' }
 #'
-#' @importFrom xml2 read_xml xml_ns_strip, xml_attr
+#' @importFrom xml2 read_xml xml_ns_strip xml_attr xml_root
 #' @export
-extract_record_dates_from_record <- function(record_path, all=F){
-  checkmate::assert_string(record_path)
-  rcp <- get_riksdag_corpora_path()
-  rcfp <- file.path(rcp, record_path)
-  if(file.exists(rcfp)){
-    record_path <- rcfp
-  }
-  checkmate::assert_file_exists(record_path)
+extract_record_dates_from_record <- function(record_path){
+  record_path <- assert_and_complement_paths(record_path)
 
   x <- read_xml(record_path)
   x <- xml_ns_strip(x)
 
-  id <- xml_attr(xml_find_all(x, "TEI"),attr = "id")
+  id <- xml_attr(xml_root(x),attr = "id")
   xs <- xml_find_all(x,".//docDate")
   df <- tibble("record_id" = id,
                "doc_date" = as.Date(xml_text(xs)))
@@ -39,18 +33,10 @@ extract_record_dates_from_record <- function(record_path, all=F){
 }
 
 
-#' @rdname extract_speeches_from_record
+#' @rdname extract_record_dates_from_record
 #' @export
 extract_record_dates_from_records <- function(record_paths, mc.cores = getOption("mc.cores", detectCores() - 1L), ...){
-  checkmate::assert_character(record_paths)
-  rcp <- get_riksdag_corpora_path()
-  rcfp <- file.path(rcp, record_paths)
-  for(i in seq_along(rcfp)){
-    if(file.exists(rcfp[i])){
-      record_paths[i] <- rcfp[i]
-    }
-  }
-  checkmate::assert_file_exists(record_paths)
+  record_paths <- assert_and_complement_paths(record_paths)
 
   if(mc.cores > 1L & .Platform$OS.type == "unix"){
     message(mc.cores, " cores are used to process the data.")

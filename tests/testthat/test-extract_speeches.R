@@ -2,9 +2,9 @@ test_that("extracting speeches works", {
   if(FALSE){
     # Setup testdata
     tdfp <-
-      c("protocols/1896/prot-1896--ak--042.xml",
-        "protocols/1951/prot-1951--fk--029.xml",
-        "protocols/1975/prot-1975--036.xml")
+      c("data/1896/prot-1896--ak--042.xml",
+        "data/1951/prot-1951--fk--029.xml",
+        "data/1975/prot-1975--036.xml")
     tdfpf <- file.path(get_riksdag_corpora_path(), tdfp)
     tdfpt <- file.path("tests/testthat/files/", basename(tdfp))
     file.copy(tdfpf, tdfpt)
