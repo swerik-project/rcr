@@ -2,9 +2,16 @@
 % Please edit documentation in R/extract_record_date_from_records.R
 \name{extract_record_dates_from_record}
 \alias{extract_record_dates_from_record}
+\alias{extract_record_dates_from_records}
 \title{Extract Date from Record}
 \usage{
-extract_record_dates_from_record(record_path, all = F)
+extract_record_dates_from_record(record_path)
+
+extract_record_dates_from_records(
+  record_paths,
+  mc.cores = getOption("mc.cores", detectCores() - 1L),
+  ...
+)
 }
 \arguments{
 \item{record_path}{a file path to a record XML file}

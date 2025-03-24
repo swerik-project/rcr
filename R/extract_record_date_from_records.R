@@ -18,7 +18,7 @@
 #'
 #' @importFrom xml2 read_xml xml_ns_strip xml_attr xml_root
 #' @export
-extract_record_dates_from_record <- function(record_path, all=F){
+extract_record_dates_from_record <- function(record_path){
   record_path <- assert_and_complement_paths(record_path)
 
   x <- read_xml(record_path)
@@ -33,7 +33,7 @@ extract_record_dates_from_record <- function(record_path, all=F){
 }
 
 
-#' @rdname extract_speeches_from_record
+#' @rdname extract_record_dates_from_record
 #' @export
 extract_record_dates_from_records <- function(record_paths, mc.cores = getOption("mc.cores", detectCores() - 1L), ...){
   record_paths <- assert_and_complement_paths(record_paths)
