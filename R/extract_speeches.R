@@ -31,14 +31,7 @@
 #' @importFrom parallel mclapply detectCores
 #' @export
 extract_speeches_from_record <- function(record_path){
-  # Assert the file exists
-  checkmate::assert_string(record_path)
-  rcp <- get_riksdag_corpora_path()
-  rcfp <- file.path(rcp, record_path)
-  if(file.exists(rcfp)){
-    record_paths <- rcfp
-  }
-  checkmate::assert_file_exists(record_path)
+  record_path <- assert_and_complement_paths(record_path)
 
   x <- xml2::read_xml(record_path)
   x <- xml2::xml_ns_strip(x)
@@ -66,15 +59,7 @@ extract_speeches_from_record <- function(record_path){
 #' @rdname extract_speeches_from_record
 #' @export
 extract_speeches_from_records <- function(record_paths, mc.cores = getOption("mc.cores", detectCores() - 1L), ...){
-  checkmate::assert_character(record_paths)
-  rcp <- get_riksdag_corpora_path()
-  rcfp <- file.path(rcp, record_paths)
-  for(i in seq_along(rcfp)){
-    if(file.exists(rcfp[i])){
-      record_paths[i] <- rcfp[i]
-    }
-  }
-  checkmate::assert_file_exists(rcfp)
+  record_paths <- assert_and_complement_paths(record_paths)
 
   if(mc.cores > 1L & .Platform$OS.type == "unix"){
     message(mc.cores, " cores are used to process the data.")
@@ -87,3 +72,21 @@ extract_speeches_from_records <- function(record_paths, mc.cores = getOption("mc
   res[, c("record_id", "speech_no", "speech_id", "who", "id", "text")]
 }
 
+#' @details
+#' The function checks if there is a file at the record_path.
+#' If its not a file, it test to complement with the corpora path
+#'
+assert_and_complement_paths <- function(record_paths){
+  # Assert the file exists
+  checkmate::assert_character(record_paths)
+  rcp <- get_riksdag_corpora_path()
+  rcfp <- file.path(rcp, record_paths)
+
+  for(i in seq_along(record_paths)){
+    if(!file.exists(record_paths[i]) & file.exists(rcfp[i])){
+      record_paths[i] <- rcfp[i]
+    }
+  }
+  checkmate::assert_file_exists(record_paths)
+  return(record_paths)
+}
