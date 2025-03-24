@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">rcr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.1</span>
       </span>
     </div>
 
@@ -71,15 +71,16 @@
 <h2 id="use">Use<a class="anchor" aria-label="anchor" href="#use"></a>
 </h2>
 <p>To use the R package, download the riksdagen-records corpora <a href="https://github.com/swerik-project/riksdagen-records" class="external-link">here</a>. As a first step, we point to the directory where the corpora are stored as follows:</p>
-<pre><code><span><span class="fu"><a href="reference/get_riksdag_corpora_path.html">set_riksdag_corpora_path</a></span><span class="op">(</span><span class="st">"[THE PATH TO THE CORPORA HERE]"</span><span class="op">)</span></span></code></pre>
+<pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://swerik-project.github.io/rcr/" class="external-link">rcr</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_riksdag_corpora_path.html">set_riksdag_corpora_path</a></span><span class="op">(</span><span class="st">"[THE PATH TO THE CORPORA HERE]"</span><span class="op">)</span></span></code></pre>
 <p>To extract speeches from the corpora, we use <code><a href="reference/extract_speeches_from_record.html">extract_speeches_from_records()</a></code>. Below is an example that assumes that the corpora path has been set and extracts the speeches from three different records.</p>
 <pre><code><span><span class="va">fps</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"protocols/1896/prot-1896--ak--042.xml"</span>,</span>
-<span>    <span class="st">"protocols/1951/prot-1951--fk--029.xml"</span>,</span>
-<span>    <span class="st">"protocols/1975/prot-1975--036.xml"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"data/1896/prot-1896--ak--042.xml"</span>,</span>
+<span>    <span class="st">"data/1951/prot-1951--fk--029.xml"</span>,</span>
+<span>    <span class="st">"data/1975/prot-1975--036.xml"</span><span class="op">)</span></span>
 <span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/extract_speeches_from_record.html">extract_speeches_from_records</a></span><span class="op">(</span><span class="va">fps</span><span class="op">)</span></span></code></pre>
 <p>Similarly we can extract the dates from the records with</p>
-<pre><code><span><span class="va">ds</span> <span class="op">&lt;-</span> <span class="fu">extract_record_dates_from_records</span><span class="op">(</span><span class="va">fps</span><span class="op">)</span></span></code></pre>
+<pre><code><span><span class="va">ds</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/extract_record_dates_from_record.html">extract_record_dates_from_records</a></span><span class="op">(</span><span class="va">fps</span><span class="op">)</span></span></code></pre>
 </div>
 </div>
 

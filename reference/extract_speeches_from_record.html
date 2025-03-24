@@ -21,7 +21,7 @@ For multiple files, parallelism can be used.'><!-- mathjax --><script src="https
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.1</span>
       </span>
     </div>
 
@@ -58,7 +58,9 @@ of the speech.</p>
 <span>  <span class="va">record_paths</span>,</span>
 <span>  mc.cores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mc.cores"</span>, <span class="fu">detectCores</span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1L</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">assert_and_complement_paths</span><span class="op">(</span><span class="va">record_paths</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -84,7 +86,10 @@ Defaults to available cores - 1.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The function returns a tibble data frame with the following variables:</p><dl><dt>speech_no</dt>
+    <p>The function returns a <code>tibble</code> data frame with the following variables:</p><dl><dt>record_id</dt>
+<dd><p>The id of the record.</p></dd>
+
+  <dt>speech_no</dt>
 <dd><p>The speech number in the record.</p></dd>
 
   <dt>speech_id</dt>
@@ -101,6 +106,11 @@ Defaults to available cores - 1.</p></dd>
 
 
 </dl></div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>The function checks if there is a file at the record_path.
+If its not a file, it test to complement with the corpora path</p>
+    </div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
